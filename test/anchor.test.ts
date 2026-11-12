@@ -176,6 +176,20 @@ t('quote anchors: nothing written, text found again', () => {
 	assert.equal(findQuote(note, { q: 'this text does not exist anywhere', line: 3 }), null);
 });
 
+t('findQuote stays fast when the quote matches thousands of times', () => {
+	const line = 'The quick brown fox jumps over the lazy dog and keeps running. '.repeat(3);
+	const big = Array.from({ length: 600 }, () => line).join('\n');   // ~115 KB, ~20k spaces
+	const t0 = Date.now();
+	const hit = findQuote(big, { q: ' ', line: 300 })!;
+	assert.ok(Date.now() - t0 < 200, `took ${Date.now() - t0} ms`);
+	assert.equal(big.slice(0, hit.from).split('\n').length - 1, 300);
+});
+
+t('findQuote breaks ties toward the earlier occurrence', () => {
+	const tie = 'x\nsame\nx\nsame';   // "same" on lines 1 and 3, hint line 2
+	assert.equal(findQuote(tie, { q: 'same', line: 2 })!.from, 2);
+});
+
 const item = { file: 'x.md', q: 'hi', line: 1 };
 
 t('migrate: imports old links and style, marks source', () => {

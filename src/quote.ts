@@ -18,10 +18,20 @@ export function makeQuote(text: string, line: number): Quote | null {
 	return { q: s.slice(0, HEAD), qe: s.slice(-HEAD), line };
 }
 
-function lineAt(text: string, offset: number): number {
-	let n = 0;
-	for (let i = 0; i < offset && i < text.length; i++) if (text.charCodeAt(i) === 10) n++;
-	return n;
+/**
+ * The offset (from an ascending list) whose line is closest to `hint`; the
+ * earlier one wins a tie. One pass over the text, however many offsets there
+ * are, so a very common quote cannot stall the UI.
+ */
+function nearestToLine(text: string, offsets: number[], hint: number): number {
+	let best = offsets[0], bestDist = Infinity, line = 0, pos = 0;
+	for (const off of offsets) {
+		for (; pos < off && pos < text.length; pos++) if (text.charCodeAt(pos) === 10) line++;
+		const d = Math.abs(line - hint);
+		if (d < bestDist) { best = off; bestDist = d; }
+		if (line > hint) break;   // later matches only get further away
+	}
+	return best;
 }
 
 function allIndexes(text: string, needle: string): number[] {
@@ -38,7 +48,7 @@ function allIndexes(text: string, needle: string): number[] {
  */
 export function findQuote(text: string, quote: { q: string; qe?: string; line?: number }): { from: number; to: number; exact: boolean } | null {
 	const hint = quote.line ?? 0;
-	const nearest = (xs: number[]) => xs.sort((a, b) => Math.abs(lineAt(text, a) - hint) - Math.abs(lineAt(text, b) - hint))[0];
+	const nearest = (xs: number[]) => nearestToLine(text, xs, hint);
 
 	const starts = allIndexes(text, quote.q);
 	if (starts.length) {
