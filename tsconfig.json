@@ -1,0 +1,1 @@
+{ "compilerOptions": { "target": "ES2020", "module": "ESNext", "moduleResolution": "bundler", "strict": true, "noEmit": true, "skipLibCheck": true, "lib": ["DOM", "ES2020", "DOM.Iterable"], "types": ["node"], "allowSyntheticDefaultImports": true, "esModuleInterop": true }, "include": ["src", "test"] }

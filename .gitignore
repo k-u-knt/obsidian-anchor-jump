@@ -1,0 +1,7 @@
+node_modules/
+dist/
+test/.out.js
+.DS_Store
+*.icloud
+data.json
+legacy-ids.json
