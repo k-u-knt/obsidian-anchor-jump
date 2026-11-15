@@ -1,18 +1,22 @@
 {
   "name": "obsidian-anchor-jump",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Obsidian plugin: copy a link that jumps to the exact spot you selected, and expose a small API for other plugins.",
   "scripts": {
     "build": "esbuild src/main.ts --bundle --format=cjs --platform=browser --target=es2020 --external:obsidian --external:electron --outfile=dist/main.js && cp manifest.json styles.css dist/",
     "typecheck": "tsc -p .",
-    "test": "esbuild test/anchor.test.ts --bundle --platform=node --outfile=test/.out.js --log-level=warning && node test/.out.js"
+    "test": "esbuild test/anchor.test.ts --bundle --platform=node --outfile=test/.out.js --log-level=warning && node test/.out.js",
+    "lint": "eslint ."
   },
   "author": "Kenta Ninomiya",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^26.6.3",
     "esbuild": "^0.28.2",
+    "eslint": "10.15.0",
+    "eslint-plugin-obsidianmd": "0.5.1",
     "obsidian": "^1.13.1",
-    "typescript": "^7.0.2"
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.72.2"
   }
 }

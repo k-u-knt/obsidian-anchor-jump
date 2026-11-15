@@ -139,7 +139,6 @@ export function markdownContext(app: App, editor: Editor, file: TFile): Selectio
 /* Canvas (uses Obsidian's internal canvas API, guarded)               */
 /* ------------------------------------------------------------------ */
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export function getCanvas(leafOrView: any): any | null {
 	const view = leafOrView?.view ?? leafOrView;
 	return view?.getViewType?.() === 'canvas' ? view.canvas ?? null : null;

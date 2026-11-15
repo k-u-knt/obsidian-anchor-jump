@@ -6,7 +6,6 @@ import { randomId } from './blocks';
 import { readingContext, readingSelection, rememberSection, rerenderReadingViews } from './reading';
 import { JumpData, migrateLinks, icloudPlaceholder } from './migrate';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 const DEFAULTS: JumpData = { linkStyle: 'short', links: {} };
 const OLD_PLUGIN_DIR = 'plugins/anchor-actions';

@@ -4,7 +4,6 @@ import { makeQuote } from './quote';
 import { buildUri, mdLink, projectNameFor } from './anchor';
 import type { SelectionContext } from './types';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 /*
  * Reading view support. The rendered note is plain HTML, so a selection is
